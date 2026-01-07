@@ -16,6 +16,7 @@ from typing import List
 from urllib.parse import quote_plus
 
 from .config import get_settings
+from .usage_tracker import check_usage_limit, record_usage
 
 SETTINGS = get_settings()
 
@@ -47,6 +48,11 @@ class LLMClient:
 
     def _generate_with_openai(self, question: str, context_docs: List[dict]) -> str:
         try:
+            # Check usage limit before making API call
+            is_allowed, remaining, limit_message = check_usage_limit()
+            if not is_allowed:
+                return limit_message
+
             from openai import OpenAI
 
             api_key = SETTINGS.openai_api_key
@@ -63,6 +69,12 @@ class LLMClient:
                 max_tokens=512,
                 temperature=0.2,
             )
+
+            # Record token usage
+            if resp.usage:
+                record_usage("gpt-3.5-turbo-input", resp.usage.prompt_tokens)
+                record_usage("gpt-3.5-turbo-output", resp.usage.completion_tokens)
+
             return resp.choices[0].message.content.strip()
         except Exception as e:
             return f"Error calling OpenAI: {e}"
