@@ -4,31 +4,44 @@
 #
 # WHY YOU NEED IT:
 # - Converts text into semantic vectors for similarity search
-# - Uses sentence-transformers for high-quality embeddings
+# - Uses OpenAI embeddings API for high-quality, low-memory embeddings
 # - Enables semantic search in the vector database
-# - Lazy-loads the model to optimize startup time
 # ================================================================================
 
-"""Embeddings helper using sentence-transformers.
+"""Embeddings helper using OpenAI API.
 """
 from typing import List
-from sentence_transformers import SentenceTransformer
+import numpy as np
+from openai import OpenAI
 
 from .config import get_settings
 
 SETTINGS = get_settings()
 
-
-_MODEL = None
-
-
-def get_model():
-    global _MODEL
-    if _MODEL is None:
-        _MODEL = SentenceTransformer(SETTINGS.embedding_model)
-    return _MODEL
+_CLIENT = None
 
 
-def embed_texts(texts: List[str]):
-    model = get_model()
-    return model.encode(texts, show_progress_bar=False, convert_to_numpy=True)
+def get_client():
+    global _CLIENT
+    if _CLIENT is None:
+        _CLIENT = OpenAI(api_key=SETTINGS.openai_api_key)
+    return _CLIENT
+
+
+def embed_texts(texts: List[str]) -> np.ndarray:
+    """Convert texts to embeddings using OpenAI API."""
+    client = get_client()
+
+    # Handle empty texts
+    if not texts:
+        return np.array([])
+
+    # OpenAI embeddings API
+    response = client.embeddings.create(
+        model=SETTINGS.embedding_model,
+        input=texts
+    )
+
+    # Extract embeddings and convert to numpy array
+    embeddings = [item.embedding for item in response.data]
+    return np.array(embeddings)

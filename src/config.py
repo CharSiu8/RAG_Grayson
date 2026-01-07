@@ -117,7 +117,7 @@ class Settings(BaseSettings):
 
     # Vector DB / embeddings
     chroma_persist_directory: str = Field(default="./chroma_db")
-    embedding_model: str = Field(default="sentence-transformers/all-MiniLM-L6-v2")
+    embedding_model: str = Field(default="text-embedding-3-small")
     chunk_size: int = Field(default=500)
 
     # LLM settings
