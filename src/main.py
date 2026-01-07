@@ -100,11 +100,16 @@ Choose and implement one of the patterns below based on your architecture.
 # ---------------------------------------------------------
 # Placeholder - Remove when implementing
 # ---------------------------------------------------------
+from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from .config import get_settings
+
+# Path to frontend
+FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
 from .ingest import ingest_openalex_query
 from .vectorstore import add_documents, query as vector_query
 from .llm import LLMClient, generate_library_links
@@ -133,6 +138,13 @@ class IngestRequest(BaseModel):
 class QueryRequest(BaseModel):
     question: str
     top_k: int = 5
+
+
+@app.get("/", response_class=HTMLResponse)
+async def serve_frontend():
+    """Serve the frontend HTML at root URL."""
+    html_file = FRONTEND_DIR / "index.html"
+    return html_file.read_text()
 
 
 @app.get("/health")
