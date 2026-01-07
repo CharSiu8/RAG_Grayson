@@ -1,0 +1,112 @@
+# ================================================================================
+# WHAT THIS FILE IS:
+# This is a GitHub Actions workflow for Continuous Deployment (CD).
+# It automatically deploys your application when you push to main or create releases.
+#
+# WHY YOU NEED IT:
+# - Demonstrates you understand the full software lifecycle
+# - Shows you can deploy applications to production
+# - Automates the deployment process (no manual steps = fewer errors)
+# - Very impressive for AI engineering roles where MLOps is valued
+#
+# WHAT TO PUT IN IT:
+# Configure deployment to your chosen platform (examples below).
+# Common options: Docker Hub, AWS, GCP, Azure, Heroku, Railway, Render
+# ================================================================================
+
+name: CD
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - 'v*'  # Triggers on version tags like v1.0.0
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # JOB: Build and push Docker image
+  # Docker containerization is highly valued in AI/ML engineering
+  # ---------------------------------------------------------------------------
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------------------------------
+      # STEP: Set up Docker Buildx
+      # Enables advanced Docker build features
+      # -----------------------------------------------------------------------
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # -----------------------------------------------------------------------
+      # STEP: Login to container registry
+      # Options: Docker Hub, GitHub Container Registry, AWS ECR, etc.
+      # Store credentials in GitHub Secrets (Settings > Secrets > Actions)
+      # -----------------------------------------------------------------------
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      # -----------------------------------------------------------------------
+      # STEP: Build and push Docker image
+      # Tags with both 'latest' and the git commit SHA for versioning
+      # -----------------------------------------------------------------------
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            yourusername/ai-research-assistant:latest
+            yourusername/ai-research-assistant:${{ github.sha }}
+
+  # ---------------------------------------------------------------------------
+  # JOB: Deploy to cloud platform
+  # Uncomment and configure the platform you're using
+  # ---------------------------------------------------------------------------
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------------------------------
+      # OPTION 1: Deploy to Railway (simple, good for portfolio projects)
+      # -----------------------------------------------------------------------
+      # - name: Deploy to Railway
+      #   uses: bervProject/railway-deploy@v1
+      #   with:
+      #     railway_token: ${{ secrets.RAILWAY_TOKEN }}
+
+      # -----------------------------------------------------------------------
+      # OPTION 2: Deploy to AWS (impressive for enterprise-focused roles)
+      # -----------------------------------------------------------------------
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
+
+      # - name: Deploy to AWS ECS
+      #   run: |
+      #     # Your AWS deployment commands here
+
+      # -----------------------------------------------------------------------
+      # OPTION 3: Deploy to Google Cloud Run (great for AI projects)
+      # -----------------------------------------------------------------------
+      # - name: Deploy to Cloud Run
+      #   uses: google-github-actions/deploy-cloudrun@v2
+      #   with:
+      #     service: ai-research-assistant
+      #     image: gcr.io/${{ secrets.GCP_PROJECT }}/ai-research-assistant
+
+      - name: Deployment placeholder
+        run: echo "Configure your deployment platform above"

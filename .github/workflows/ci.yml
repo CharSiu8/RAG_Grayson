@@ -1,0 +1,100 @@
+# ================================================================================
+# WHAT THIS FILE IS:
+# This is a GitHub Actions workflow file for Continuous Integration (CI).
+# It automatically runs tests, linting, and other checks whenever you push code.
+#
+# WHY YOU NEED IT:
+# - Shows employers you follow professional development practices
+# - Catches bugs early before they reach production
+# - Ensures code quality remains consistent
+# - The green checkmark on your commits looks professional
+#
+# WHAT TO PUT IN IT:
+# Replace the placeholder steps below with your actual CI pipeline.
+# ================================================================================
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------------------------------
+      # STEP: Set up Python
+      # Change the version to match your project requirements
+      # -----------------------------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # -----------------------------------------------------------------------
+      # STEP: Install dependencies
+      # This installs your project's requirements
+      # -----------------------------------------------------------------------
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      # -----------------------------------------------------------------------
+      # STEP: Run linting
+      # Checks code style and catches common errors
+      # Tools: ruff, flake8, pylint, black, isort
+      # -----------------------------------------------------------------------
+      - name: Run linting
+        run: |
+          # Example using ruff (fast Python linter)
+          ruff check .
+          # Example using black (code formatter check)
+          black --check .
+
+      # -----------------------------------------------------------------------
+      # STEP: Run type checking
+      # Catches type errors before runtime
+      # Shows you write type-safe code (impressive for AI engineering)
+      # -----------------------------------------------------------------------
+      - name: Run type checking
+        run: |
+          mypy src/
+
+      # -----------------------------------------------------------------------
+      # STEP: Run tests
+      # Executes your test suite with coverage reporting
+      # -----------------------------------------------------------------------
+      - name: Run tests
+        run: |
+          pytest tests/ -v --cov=src --cov-report=xml
+
+      # -----------------------------------------------------------------------
+      # STEP: Upload coverage (optional but impressive)
+      # Shows test coverage percentage on your repo
+      # -----------------------------------------------------------------------
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+
+  # ---------------------------------------------------------------------------
+  # JOB: Security scanning (optional but shows security awareness)
+  # ---------------------------------------------------------------------------
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run security scan
+        run: |
+          pip install bandit
+          bandit -r src/
