@@ -20,11 +20,11 @@ WHY YOU NEED IT:
 
 ## Overview
 
-**GRAYSON** is a RAG (Retrieval-Augmented Generation) chatbot focused exclusively on **theology, philosophy, and biblical studies**. It helps researchers, students, and enthusiasts quickly locate and understand academic resources in these fields.
+**GRAYSON** is a RAG (Retrieval-Augmented Generation) chatbot I made for my brother in law who is currently doing a PhD. It is focused exclusively on **theology, philosophy, and biblical studies**. It helps researchers, students, and enthusiasts quickly locate and understand academic resources in these fields.
 
 ### The Problem
 
-Researchers and students waste hours searching fragmented databases for theology and philosophy papers. University libraries are often outdated, and finding relevant academic sources across multiple platforms is tedious.
+Researchers and students waste hours searching fragmented databases for theology and philosophy papers. University libraries are often outdated, and finding relevant academic sources across multiple platforms is tedious. My brother in law was also frustrated with not being able to find resources that are referenced by LLMS in his primary libraries, OMNI and JSTOR
 
 ### The Solution
 
