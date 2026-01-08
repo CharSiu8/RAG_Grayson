@@ -114,6 +114,7 @@ class Settings(BaseSettings):
     # API keys
     openai_api_key: str | None = Field(default=None)
     semantic_scholar_api_key: str | None = Field(default=None)
+    discord_webhook_url: str | None = Field(default=None)
 
     # Vector DB / embeddings
     chroma_persist_directory: str = Field(default="./chroma_db")

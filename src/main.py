@@ -140,6 +140,10 @@ class QueryRequest(BaseModel):
     top_k: int = 5
 
 
+class FeedbackRequest(BaseModel):
+    message: str
+
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_frontend():
     """Serve the frontend HTML at root URL."""
@@ -175,6 +179,34 @@ async def query(req: QueryRequest):
             "jstor": library_links["jstor"],
         },
     }
+
+
+@app.post("/feedback")
+async def submit_feedback(req: FeedbackRequest):
+    """Send user feedback to Discord webhook."""
+    import httpx
+
+    webhook_url = settings.discord_webhook_url
+    if not webhook_url:
+        raise HTTPException(status_code=500, detail="Feedback system not configured")
+
+    if not req.message.strip():
+        raise HTTPException(status_code=400, detail="Feedback message cannot be empty")
+
+    payload = {
+        "embeds": [{
+            "title": "GRAYSON Feedback",
+            "description": req.message,
+            "color": 3447003,
+        }]
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(webhook_url, json=payload)
+        if response.status_code != 204:
+            raise HTTPException(status_code=500, detail="Failed to send feedback")
+
+    return {"status": "success", "message": "Feedback sent successfully"}
 
 
 if __name__ == "__main__":
