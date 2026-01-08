@@ -42,6 +42,7 @@ GRAYSON centralizes semantic search across theology and philosophy resources, pr
 - **Library Integration**: Provides direct search links to OMNI and JSTOR
 - **"Have You Considered?"**: Suggests related topics to explore after each query
 - **Simple Web UI**: Clean chat interface for easy interaction
+- **/feedback**: Users can provide feedback about their interactions. these messages are webhooked to my Discord
 
 ## Architecture
 
