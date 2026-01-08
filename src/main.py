@@ -100,13 +100,23 @@ Choose and implement one of the patterns below based on your architecture.
 # ---------------------------------------------------------
 # Placeholder - Remove when implementing
 # ---------------------------------------------------------
+import logging
 from pathlib import Path
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from .config import get_settings
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(message)s',
+    datefmt='%H:%M:%S'
+)
+logger = logging.getLogger(__name__)
 
 # Path to frontend
 FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
@@ -168,9 +178,13 @@ async def ingest(req: IngestRequest):
 
 @app.post("/query")
 async def query(req: QueryRequest):
+    logger.info(f"USER: {req.question}")
     hits = vector_query(req.question, top_k=req.top_k)
     answer = llm.generate(req.question, hits)
     library_links = generate_library_links(req.question)
+    # Log truncated response (first 200 chars)
+    preview = answer[:200].replace('\n', ' ') + ('...' if len(answer) > 200 else '')
+    logger.info(f"GRAYSON: {preview}")
     return {
         "answer": answer,
         "sources": [h.get("metadata") for h in hits],
@@ -185,6 +199,8 @@ async def query(req: QueryRequest):
 async def submit_feedback(req: FeedbackRequest):
     """Send user feedback to Discord webhook."""
     import httpx
+
+    logger.info(f"FEEDBACK: {req.message}")
 
     webhook_url = settings.discord_webhook_url
     if not webhook_url:
@@ -206,6 +222,7 @@ async def submit_feedback(req: FeedbackRequest):
         if response.status_code != 204:
             raise HTTPException(status_code=500, detail="Failed to send feedback")
 
+    logger.info("FEEDBACK: Sent to Discord successfully")
     return {"status": "success", "message": "Feedback sent successfully"}
 
 
