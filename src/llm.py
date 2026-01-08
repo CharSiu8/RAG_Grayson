@@ -84,12 +84,14 @@ class LLMClient:
         for d in context_docs:
             title = d.get('metadata', {}).get('title', d.get('id'))
             doi = d.get('metadata', {}).get('doi', d.get('metadata', {}).get('url', 'N/A'))
+            free_pdf = d.get('metadata', {}).get('free_pdf')
             lib_links = generate_library_links(title) if title else {"omni": "", "jstor": ""}
             ctx_parts.append(
                 f"Source: {title}\n"
                 f"Original URL: {doi}\n"
                 f"OMNI Link: {lib_links['omni']}\n"
                 f"JSTOR Link: {lib_links['jstor']}\n"
+                f"Free PDF: {free_pdf if free_pdf else 'Not available'}\n"
                 f"{d.get('document')[:1500]}"
             )
         ctx = "\n\n".join(ctx_parts)
@@ -107,17 +109,17 @@ INSTRUCTIONS:
 4. Format source links as clickable markdown links with the ACTUAL URLs.
 5. Provide multiple sources when possible to give a well-rounded answer.
 6. End your response with a "Have you considered?" section that suggests ONE highly related topic, resource, or research direction the user might find valuable. This should be genuinely useful and directly related to their query.
-7. Note: Free PDF links for sources are automatically added by the system when available via Unpaywall and Semantic Scholar. You do not need to find or mention PDF links.
+7. When a Free PDF link is available for a source (not "Not available"), ALWAYS include it in your Sources section. Free PDFs are valuable for researchers who may not have institutional access.
 
 FORMAT YOUR RESPONSE AS:
 [Your answer with inline citations]
 
 **Sources:**
-- [Source Title](https://omni.scholarsportal.info/search?q=...) | [JSTOR](https://www.jstor.org/action/doBasicSearch?Query=...)
+- [Source Title](https://omni.scholarsportal.info/search?q=...) | [JSTOR](https://www.jstor.org/action/doBasicSearch?Query=...) | [Free PDF](actual_free_pdf_url_if_available)
 
 **Have you considered?** [Your suggestion for a related topic or resource to explore]
 
-IMPORTANT: Replace the "..." with the actual encoded query from the OMNI Link and JSTOR Link URLs provided in each source's context above. Do NOT use placeholder text."""
+IMPORTANT: Replace the "..." with the actual encoded query from the OMNI Link and JSTOR Link URLs provided in each source's context above. If a Free PDF URL is available, include it. If Free PDF says "Not available", omit the Free PDF link for that source. Do NOT use placeholder text."""
         return prompt
 
     def _generate_placeholder(self, question: str, context_docs: List[dict]) -> str:
