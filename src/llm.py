@@ -102,10 +102,12 @@ USER QUESTION: {question}
 
 INSTRUCTIONS:
 1. When the user asks how a concept relates to specific verses, explain the theological/scholarly connection between them, not just summarize each verse.
-2. ALWAYS ANSWER THE ACTUAL QUESTION BEING ASKED. Provide a concise, helpful answer based on the context above.
+2. ALWAYS ANSWER THE ACTUAL QUESTION BEING ASKED. Provide a concise, helpful answer based on the context above and offer detailed explanations concerning multiple scholars perspectives on the topic.
 3. Always cite your sources using the OMNI and JSTOR links provided in the context (not the original URL). Use the FULL URL starting with https://.
 4. Format source links as clickable markdown links with the ACTUAL URLs.
-5. End your response with a "Have you considered?" section that suggests ONE highly related topic, resource, or research direction the user might find valuable. This should be genuinely useful and directly related to their query.
+5. Provide multiple sources when possible to give a well-rounded answer.
+6. End your response with a "Have you considered?" section that suggests ONE highly related topic, resource, or research direction the user might find valuable. This should be genuinely useful and directly related to their query.
+7. Note: Free PDF links for sources are automatically added by the system when available via Unpaywall and Semantic Scholar. You do not need to find or mention PDF links.
 
 FORMAT YOUR RESPONSE AS:
 [Your answer with inline citations]

@@ -40,6 +40,7 @@ GRAYSON centralizes semantic search across theology and philosophy resources, pr
 - **Semantic Search**: Uses vector embeddings to find conceptually related papers, not just keyword matches
 - **Source Citations**: Every response includes clickable links to original sources
 - **Library Integration**: Provides direct search links to OMNI and JSTOR
+- **Free PDF Finder**: Automatically searches Unpaywall and Semantic Scholar for open access PDFs of cited sources
 - **"Have You Considered?"**: Suggests related topics to explore after each query
 - **Simple Web UI**: Clean chat interface for easy interaction
 - **/feedback**: Users can provide feedback about their interactions. these messages are webhooked to my Discord
@@ -145,7 +146,7 @@ curl -X POST "http://localhost:8000/query" \
 {
   "answer": "Based on the research... **Have you considered?** ...",
   "sources": [
-    {"title": "Paper Title", "doi": "https://doi.org/...", "year": 2020}
+    {"title": "Paper Title", "doi": "https://doi.org/...", "year": 2020, "free_pdf": "https://..."}
   ],
   "library_links": {
     "omni": "https://omni.scholarsportal.info/search?q=...",
@@ -153,6 +154,8 @@ curl -X POST "http://localhost:8000/query" \
   }
 }
 ```
+
+Note: `free_pdf` is included when an open access version is found via Unpaywall or Semantic Scholar.
 
 ## Project Structure
 
@@ -164,7 +167,8 @@ grayson/
 │   ├── ingest.py          # Paper ingestion from OpenAlex
 │   ├── embeddings.py      # OpenAI embeddings wrapper
 │   ├── vectorstore.py     # ChromaDB vector database
-│   └── llm.py             # LLM client (OpenAI)
+│   ├── llm.py             # LLM client (OpenAI)
+│   └── pdf_lookup.py      # Free PDF finder (Unpaywall/Semantic Scholar)
 ├── frontend/              # Web chat interface
 │   └── index.html         # Single-page chat UI
 ├── tests/                 # Test files

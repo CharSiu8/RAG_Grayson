@@ -151,9 +151,12 @@
                 sourcesDiv.innerHTML = `
                     <p class="text-xs text-gray-500 mb-2">Sources:</p>
                     ${sources.map(s => `
-                        <a href="${s.doi || s.url || '#'}" target="_blank" class="block text-sm text-blue-600 hover:underline truncate">
-                            ${s.title || 'Untitled'} ${s.year ? `(${s.year})` : ''}
-                        </a>
+                        <div class="flex items-center gap-2 mb-1">
+                            <a href="${s.doi || s.url || '#'}" target="_blank" class="text-sm text-blue-600 hover:underline truncate flex-1">
+                                ${s.title || 'Untitled'} ${s.year ? `(${s.year})` : ''}
+                            </a>
+                            ${s.free_pdf ? `<a href="${s.free_pdf}" target="_blank" class="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded hover:bg-green-200 transition whitespace-nowrap">Free PDF</a>` : ''}
+                        </div>
                     `).join('')}
                 `;
                 bubble.appendChild(sourcesDiv);

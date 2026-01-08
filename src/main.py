@@ -123,6 +123,7 @@ FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
 from .ingest import ingest_openalex_query
 from .vectorstore import add_documents, query as vector_query
 from .llm import LLMClient, generate_library_links
+from .pdf_lookup import enrich_sources_with_pdfs
 
 app = FastAPI(title="GRAYSON - AI Research Assistant")
 
@@ -182,12 +183,23 @@ async def query(req: QueryRequest):
     hits = vector_query(req.question, top_k=req.top_k)
     answer = llm.generate(req.question, hits)
     library_links = generate_library_links(req.question)
+
+    # Get source metadata and enrich with free PDF links
+    sources = [h.get("metadata") for h in hits]
+    sources_with_pdfs = await enrich_sources_with_pdfs(sources)
+
     # Log truncated response (first 200 chars)
     preview = answer[:200].replace('\n', ' ') + ('...' if len(answer) > 200 else '')
     logger.info(f"GRAYSON: {preview}")
+
+    # Count how many free PDFs were found
+    pdf_count = sum(1 for s in sources_with_pdfs if s and s.get("free_pdf"))
+    if pdf_count > 0:
+        logger.info(f"PDF: Found {pdf_count} free PDF(s)")
+
     return {
         "answer": answer,
-        "sources": [h.get("metadata") for h in hits],
+        "sources": sources_with_pdfs,
         "library_links": {
             "omni": library_links["omni"],
             "jstor": library_links["jstor"],
