@@ -133,7 +133,13 @@
                 .replace(/\*\*Have you considered\?\*\*/g, '<strong class="text-blue-600">Have you considered?</strong>')
                 .replace(/\*\*Sources:\*\*/g, '<strong>Sources:</strong>')
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>')
+                .replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
+                    // Only create clickable links for valid URLs starting with http
+                    if (url && url.startsWith('http')) {
+                        return `<a href="${url}" target="_blank">${text}</a>`;
+                    }
+                    return text; // Just show text if URL is invalid
+                })
                 .replace(/\n/g, '<br>');
 
             bubble.innerHTML = `<div class="markdown-content">${formattedContent}</div>`;

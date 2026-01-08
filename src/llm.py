@@ -103,17 +103,19 @@ USER QUESTION: {question}
 INSTRUCTIONS:
 1. When the user asks how a concept relates to specific verses, explain the theological/scholarly connection between them, not just summarize each verse.
 2. ALWAYS ANSWER THE ACTUAL QUESTION BEING ASKED. Provide a concise, helpful answer based on the context above.
-3. Always cite your sources using the OMNI and JSTOR links provided (not the original URL).
-4. Format source links as clickable markdown links.
+3. Always cite your sources using the OMNI and JSTOR links provided in the context (not the original URL). Use the FULL URL starting with https://.
+4. Format source links as clickable markdown links with the ACTUAL URLs.
 5. End your response with a "Have you considered?" section that suggests ONE highly related topic, resource, or research direction the user might find valuable. This should be genuinely useful and directly related to their query.
 
 FORMAT YOUR RESPONSE AS:
 [Your answer with inline citations]
 
 **Sources:**
-- [Source Title](OMNI Link) | [JSTOR](JSTOR Link)
+- [Source Title](https://omni.scholarsportal.info/search?q=...) | [JSTOR](https://www.jstor.org/action/doBasicSearch?Query=...)
 
-**Have you considered?** [Your suggestion for a related topic or resource to explore]"""
+**Have you considered?** [Your suggestion for a related topic or resource to explore]
+
+IMPORTANT: Replace the "..." with the actual encoded query from the OMNI Link and JSTOR Link URLs provided in each source's context above. Do NOT use placeholder text."""
         return prompt
 
     def _generate_placeholder(self, question: str, context_docs: List[dict]) -> str:
