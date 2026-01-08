@@ -14,6 +14,10 @@ WHY YOU NEED IT:
 ================================================================================
 -->
 
+## Live Demo
+
+**Try it now:** [https://grayson-7um6.onrender.com](https://grayson-7um6.onrender.com)
+
 ## Overview
 
 **GRAYSON** is a RAG (Retrieval-Augmented Generation) chatbot focused exclusively on **theology, philosophy, and biblical studies**. It helps researchers, students, and enthusiasts quickly locate and understand academic resources in these fields.
@@ -59,10 +63,11 @@ flowchart LR
 | Language | Python 3.10+ |
 | Backend | FastAPI |
 | Vector Database | ChromaDB |
-| Embeddings | Sentence-Transformers |
-| LLM | OpenAI API (optional) |
+| Embeddings | OpenAI text-embedding-3-small |
+| LLM | OpenAI GPT-3.5-turbo |
 | Frontend | Vanilla HTML/JS + Tailwind CSS |
 | Academic Data | OpenAlex API (filtered to theology/philosophy) |
+| Hosting | Render |
 
 ## Getting Started
 
@@ -75,8 +80,8 @@ flowchart LR
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/grayson.git
-cd grayson
+git clone https://github.com/CharSiu8/GRAYSON.git
+cd GRAYSON
 ```
 
 2. Create and activate a virtual environment:
@@ -156,14 +161,14 @@ grayson/
 │   ├── main.py            # FastAPI application entry point
 │   ├── config.py          # Configuration management
 │   ├── ingest.py          # Paper ingestion from OpenAlex
-│   ├── embeddings.py      # Sentence-transformers wrapper
+│   ├── embeddings.py      # OpenAI embeddings wrapper
 │   ├── vectorstore.py     # ChromaDB vector database
 │   └── llm.py             # LLM client (OpenAI)
 ├── frontend/              # Web chat interface
 │   └── index.html         # Single-page chat UI
 ├── tests/                 # Test files
 ├── docs/                  # Documentation
-├── .github/               # GitHub Actions CI/CD
+├── .github/               # GitHub templates and configuration
 ├── requirements.txt       # Production dependencies
 └── .env.example          # Environment variables template
 ```
@@ -187,7 +192,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) for deta
 ## Acknowledgments
 
 - OpenAlex for providing open academic metadata
-- Sentence-Transformers for embedding models
+- OpenAI for embeddings and language models
 - ChromaDB for vector storage
 - The open-source AI community
 

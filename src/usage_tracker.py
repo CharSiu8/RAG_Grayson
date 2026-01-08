@@ -24,7 +24,7 @@ PRICING = {
     "gpt-3.5-turbo-output": 1.50 / 1_000_000,    # $1.50 per 1M tokens
 }
 
-MONTHLY_LIMIT = 10.00  # $10 per month
+MONTHLY_LIMIT = 5.00  # $5 per month
 
 # Store usage data in the project root
 USAGE_FILE = Path(__file__).parent.parent / "usage_data.json"
