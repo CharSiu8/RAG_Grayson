@@ -177,9 +177,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-AGPL-3.0 — Free for personal and educational use.
-
-For commercial licensing, contact: [stpolino@gmail.com]
+all rights reserved
 
 ## Acknowledgments
 
