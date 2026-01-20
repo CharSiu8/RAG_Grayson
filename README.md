@@ -177,7 +177,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-all rights reserved
+© 2025 Steven Polino — All Rights Reserved
+
+Recruiters/employers welcome to clone and test for evaluation purposes.
+
+See [LICENSE](LICENSE) for full terms.
 
 ## Acknowledgments
 
