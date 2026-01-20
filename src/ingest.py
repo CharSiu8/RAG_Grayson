@@ -4,14 +4,14 @@
 #
 # WHY YOU NEED IT:
 # - Provides the data pipeline for populating the vector database
-# - Filters results to theology, philosophy, and biblical studies
+# - Filters results to theology research
 # - Handles API communication with academic data sources
 # - Normalizes paper metadata for consistent storage
 # ================================================================================
 
-"""Ingestion utilities for theology, philosophy, and biblical studies.
+"""Ingestion utilities for theology research.
 
-This module focuses exclusively on academic sources in theology, philosophy, and religion.
+This module focuses exclusively on academic sources in theology.
 """
 import os
 import requests
@@ -24,11 +24,7 @@ SETTINGS = get_settings()
 
 # OpenAlex concept IDs for filtering
 THEOLOGY_CONCEPTS = [
-    "C138885662",    # Philosophy
     "C2778407487",   # Theology
-    "C175444787",    # Religious studies
-    "C41008148",     # Religion
-    "C2522767166",   # Biblical studies
 ]
 
 
@@ -45,13 +41,13 @@ def _inverted_index_to_text(inverted_index: dict) -> str:
 
 
 def search_openalex(query: str, per_page: int = 10) -> List[Dict]:
-    """Search OpenAlex for theology/philosophy/religion papers.
+    """Search OpenAlex for theology papers.
 
-    Results are automatically filtered to relevant academic disciplines.
+    Results are automatically filtered to theology research.
     """
     base = "https://api.openalex.org/works"
 
-    # Build concept filter for theology/philosophy/religion
+    # Build concept filter for theology
     concept_filter = "|".join(f"https://openalex.org/{c}" for c in THEOLOGY_CONCEPTS)
 
     params = {
@@ -85,14 +81,14 @@ def search_openalex(query: str, per_page: int = 10) -> List[Dict]:
 
 
 def search_semanticscholar(query: str, limit: int = 10) -> List[Dict]:
-    """Search Semantic Scholar for theology/philosophy papers."""
+    """Search Semantic Scholar for theology papers."""
     api_key = os.getenv("SEMANTIC_SCHOLAR_API_KEY") or SETTINGS.semantic_scholar_api_key
     headers = {"Accept": "application/json"}
     if api_key:
         headers["x-api-key"] = api_key
 
     # Append theology context to improve relevance
-    enhanced_query = f"{query} theology philosophy religion"
+    enhanced_query = f"{query} theology"
 
     params = {
         "query": enhanced_query,
@@ -118,7 +114,7 @@ def search_semanticscholar(query: str, limit: int = 10) -> List[Dict]:
 
 
 def ingest_openalex_query(query: str, max_results: int = 10) -> List[Dict]:
-    """Ingest theology/philosophy papers from OpenAlex.
+    """Ingest theology papers from OpenAlex.
 
     Returns list of records with `id`, `title`, `text`, `metadata`.
     """

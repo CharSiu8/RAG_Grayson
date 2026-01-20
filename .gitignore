@@ -113,7 +113,7 @@ models/
 checkpoints/
 
 # Vector database files
-chroma_db/
+# chroma_db/ - Keeping in repo for theology papers
 *.faiss
 *.index
 vector_store/
