@@ -22,12 +22,6 @@ from .config import get_settings
 
 SETTINGS = get_settings()
 
-# OpenAlex concept IDs for filtering
-THEOLOGY_CONCEPTS = [
-    "C2778407487",   # Theology
-]
-
-
 def _inverted_index_to_text(inverted_index: dict) -> str:
     """Convert OpenAlex inverted index abstract format to plain text."""
     if not inverted_index or not isinstance(inverted_index, dict):
@@ -43,19 +37,15 @@ def _inverted_index_to_text(inverted_index: dict) -> str:
 def search_openalex(query: str, per_page: int = 10) -> List[Dict]:
     """Search OpenAlex for theology papers.
 
-    Results are automatically filtered to theology research.
+    Relies on theology-specific search queries to filter results.
     """
     base = "https://api.openalex.org/works"
-
-    # Build concept filter for theology
-    concept_filter = "|".join(f"https://openalex.org/{c}" for c in THEOLOGY_CONCEPTS)
 
     params = {
         "search": query,
         "per-page": per_page,
-        "filter": f"concepts.id:{concept_filter}",
     }
-    url = f"{base}?{urlencode(params, safe=':|')}"
+    url = f"{base}?{urlencode(params)}"
 
     r = requests.get(url, timeout=15)
     r.raise_for_status()

@@ -42,10 +42,16 @@ def embed_texts(texts: List[str]) -> np.ndarray:
     if not texts:
         return np.array([])
 
+    # Filter out empty or whitespace-only texts (OpenAI API rejects them)
+    valid_texts = [t.strip() for t in texts if t and t.strip()]
+
+    if not valid_texts:
+        return np.array([])
+
     # OpenAI embeddings API
     response = client.embeddings.create(
         model=SETTINGS.embedding_model,
-        input=texts
+        input=valid_texts
     )
 
     # Record token usage

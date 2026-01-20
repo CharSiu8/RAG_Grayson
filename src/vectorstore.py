@@ -43,6 +43,7 @@ def add_documents(documents: List[Dict[str, Any]]):
     """Documents: list of {id, text, metadata}.
 
     This function chunks documents simply and stores embeddings + metadata.
+    Skips documents with empty text.
     """
     collection = get_collection()
     ids = []
@@ -51,6 +52,11 @@ def add_documents(documents: List[Dict[str, Any]]):
     for d in documents:
         doc_id = str(d.get("id") or "").replace("/", "_").replace(":", "_")
         text = d.get("text", "") or ""
+
+        # Skip documents with empty text
+        if not text.strip():
+            continue
+
         ids.append(doc_id)
         docs.append(text)
         # Ensure all metadata values are simple types for ChromaDB
@@ -66,6 +72,11 @@ def add_documents(documents: List[Dict[str, Any]]):
             else:
                 clean_meta[k] = str(v)
         metadatas.append(clean_meta)
+
+    # Only proceed if we have valid documents
+    if not docs:
+        return
+
     embeddings = embed_texts(docs).tolist()
     collection.add(ids=ids, documents=docs, metadatas=metadatas, embeddings=embeddings)
 

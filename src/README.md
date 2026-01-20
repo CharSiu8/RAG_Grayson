@@ -55,8 +55,7 @@ Centralized configuration using Pydantic Settings:
 - Server host/port settings
 
 ### `ingest.py` - Data Ingestion
-Fetches academic papers from OpenAlex API filtered to theology concepts:
-- Theology (C2778407487)
+Fetches academic papers from OpenAlex API using theology-specific search queries (e.g., "systematic theology", "biblical theology", "Christology").
 
 ### `vectorstore.py` - Vector Database
 ChromaDB wrapper for storing and querying embeddings:
