@@ -1,19 +1,19 @@
-# GRAYSON - Theology & Philosophy Research Assistant
+# GRAYSON - Theology Research Assistant
 
 ## Live Demo (this project has been updated to a different system: https://github.com/CharSiu8/GRAYSON)
 **Try it now:** [https://grayson-7um6.onrender.com](https://grayson-7um6.onrender.com)
 
 ## Overview
 
-**GRAYSON** is a RAG (Retrieval-Augmented Generation) chatbot I made for my brother in law who is currently doing a PhD. It is focused exclusively on **theology, philosophy, and biblical studies**. It helps researchers, students, and enthusiasts quickly locate and understand academic resources in these fields.
+**GRAYSON** is a RAG (Retrieval-Augmented Generation) chatbot I made for my brother in law who is currently doing a PhD. It is focused exclusively on **theology research**. It helps researchers, students, and enthusiasts quickly locate and understand academic resources in theology.
 
 ### The Problem
 
-Researchers and students waste hours searching fragmented databases for theology and philosophy papers. University libraries are often outdated, and finding relevant academic sources across multiple platforms is tedious. My brother in law was also frustrated with not being able to find resources that are referenced by LLMS in his primary libraries, OMNI and JSTOR
+Researchers and students waste hours searching fragmented databases for theology papers. University libraries are often outdated, and finding relevant academic sources across multiple platforms is tedious. My brother in law was also frustrated with not being able to find resources that are referenced by LLMS in his primary libraries, OMNI and JSTOR
 
 ### The Solution
 
-GRAYSON centralizes semantic search across theology and philosophy resources, providing:
+GRAYSON centralizes semantic search across theology resources, providing:
 - Instant access to relevant academic papers
 - AI-generated summaries with source citations
 - Direct links to OMNI and JSTOR for full-text access
@@ -21,7 +21,7 @@ GRAYSON centralizes semantic search across theology and philosophy resources, pr
 
 ## Features
 
-- **Theology-Focused Search**: Automatically filters results to philosophy, theology, religion, and biblical studies
+- **Theology-Focused Search**: Automatically filters results to theology research
 - **Semantic Search**: Uses vector embeddings to find conceptually related papers, not just keyword matches
 - **Source Citations**: Every response includes clickable links to original sources
 - **Library Integration**: Provides direct search links to OMNI and JSTOR
@@ -53,7 +53,7 @@ flowchart LR
 | Embeddings | OpenAI text-embedding-3-small |
 | LLM | OpenAI GPT-3.5-turbo |
 | Frontend | Vanilla HTML/JS + Tailwind CSS |
-| Academic Data | OpenAlex API (filtered to theology/philosophy) |
+| Academic Data | OpenAlex API (filtered to theology) |
 | Hosting | Render |
 
 ## Getting Started
@@ -192,4 +192,4 @@ Steven Polino - Project Creator
 
 ---
 
-*GRAYSON: Your AI companion for theology and philosophy research.*
+*GRAYSON: Your AI companion for theology research.*

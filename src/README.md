@@ -15,7 +15,7 @@ WHY YOU NEED IT:
 
 ## Overview
 
-This directory contains the core backend code for GRAYSON, a RAG (Retrieval-Augmented Generation) chatbot for theology and philosophy research.
+This directory contains the core backend code for GRAYSON, a RAG (Retrieval-Augmented Generation) chatbot for theology research.
 
 ## Module Structure
 
@@ -55,12 +55,8 @@ Centralized configuration using Pydantic Settings:
 - Server host/port settings
 
 ### `ingest.py` - Data Ingestion
-Fetches academic papers from OpenAlex API filtered to theology/philosophy concepts:
-- Philosophy (C138885662)
-- Theology (C124101348)
-- Religious Studies (C177028987)
-- Religion (C136116916)
-- Biblical Studies (C67961920)
+Fetches academic papers from OpenAlex API filtered to theology concepts:
+- Theology (C2778407487)
 
 ### `vectorstore.py` - Vector Database
 ChromaDB wrapper for storing and querying embeddings:
