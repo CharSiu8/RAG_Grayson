@@ -25,8 +25,8 @@ def generate_library_links(query: str) -> dict:
     """Generate search links for OMNI and JSTOR based on the query."""
     encoded_query = quote_plus(query)
     return {
-        "omni": f"https://omni.scholarsportal.info/search?q={encoded_query}",
-        "jstor": f"https://www.jstor.org/action/doBasicSearch?Query={encoded_query}",
+        "omni": f"https://ocul-uo.primo.exlibrisgroup.com/discovery/search?vid=01OCUL_UO:UO_DEFAULT&tab=OCULDiscoveryNetwork&query=any,contains,{encoded_query}",
+        "jstor": f"https://ocul-uo.primo.exlibrisgroup.com/discovery/search?vid=01OCUL_UO:UO_DEFAULT&tab=Everything&query=any,contains,{encoded_query}",
     }
 
 
