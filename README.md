@@ -1,4 +1,4 @@
-# GRAYSON - Theology Research Assistant
+# RAG_GRAYSON - Theology Research Assistant
 
 ## Live Demo (this project has been updated to a different system: https://github.com/CharSiu8/GRAYSON)
 **Try it now:** [https://grayson-7um6.onrender.com](https://grayson-7um6.onrender.com)
