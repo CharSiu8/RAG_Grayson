@@ -1,11 +1,11 @@
-# RAG_GRAYSON - Theology Research Assistant
+# RAG_Grayson - Theology Research Assistant
 
 ## Live Demo (this project has been updated to a different system: https://github.com/CharSiu8/GRAYSON)
 **Try it now:** [https://grayson-7um6.onrender.com](https://grayson-7um6.onrender.com)
 
 ## Overview
 
-**GRAYSON** is a RAG (Retrieval-Augmented Generation) chatbot I made for my brother in law who is currently doing a PhD. It is focused exclusively on **theology research**. It helps researchers, students, and enthusiasts quickly locate and understand academic resources in theology.
+**RAG_Grayson** is a RAG (Retrieval-Augmented Generation) chatbot I made for my brother in law who is currently doing a PhD. It is focused exclusively on **theology research**. It helps researchers, students, and enthusiasts quickly locate and understand academic resources in theology.
 
 ### The Problem
 
@@ -13,7 +13,7 @@ Researchers and students waste hours searching fragmented databases for theology
 
 ### The Solution
 
-GRAYSON centralizes semantic search across theology resources, providing:
+RAG_Grayson centralizes semantic search across theology resources, providing:
 - Instant access to relevant academic papers
 - AI-generated summaries with source citations
 - Direct links to OMNI and JSTOR for full-text access
@@ -67,8 +67,8 @@ flowchart LR
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/CharSiu8/GRAYSON.git
-cd GRAYSON
+git clone https://github.com/CharSiu8/RAG_Grayson.git
+cd RAG_Grayson
 ```
 
 2. Create and activate a virtual environment:
@@ -145,7 +145,7 @@ Note: `free_pdf` is included when an open access version is found via Unpaywall 
 ## Project Structure
 
 ```
-grayson/
+rag_grayson/
 ├── src/                    # Backend source code
 │   ├── main.py            # FastAPI application entry point
 │   ├── config.py          # Configuration management
