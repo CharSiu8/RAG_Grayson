@@ -177,7 +177,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+AGPL-3.0 — Free for personal and educational use.
+
+For commercial licensing, contact: [stpolino@gmail.com]
 
 ## Acknowledgments
 
